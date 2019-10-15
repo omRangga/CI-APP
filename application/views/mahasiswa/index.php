@@ -1,5 +1,5 @@
 <div class="container">
-    
+   <div class="flash-data" data-flashdata="<?=$this->session->flashdata('flash');?>"></div>
     <div class="row mt-3">
         <div class="div-col-md-6">
             <a href="<?= base_url(); ?>mahasiswa/tambah" class="btn btn-primary">Tambah data mahasiswa</a>
