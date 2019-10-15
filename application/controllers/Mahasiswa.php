@@ -1,44 +1,46 @@
-<?php 
+<?php
 
-class Mahasiswa extends CI_Controller{
+class Mahasiswa extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('Mahasiswa_model');
+        $this->load->library('form_validation');
+    }
 
-	public function index(){
+    public function index()
+    {
+        $data['judul'] = 'Daftar Mahasiswa';
+        $data['mahasiswa'] = $this->Mahasiswa_model->getAllMahasiswa();
+        $this->load->view('templates/header', $data);
+        $this->load->view('mahasiswa/index', $data);
+        $this->load->view('templates/footer');
+    }
 
-		// $data['mahasiswa']=[
+    public function tambah()
+    {
+        $data['judul'] = 'Form Tambah Data Mahasiswa';
 
-		// 	[
+        $this->form_validation->set_rules('nama', 'Nama', 'required');
+        $this->form_validation->set_rules('nrp', 'NRP', 'required|numeric');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-		// 	'nama'=>'Rangga Adi Permana',
-		// 	'nrp'=>'163040073',
-		// 	'email'=>'Rangga.163040073@mail.unpas.ac.id',
-		// 	'jurusan'=>'Teknik Informatika',
-		// ],
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('mahasiswa/tambah');
+            $this->load->view('templates/footer');
+        } else {
+            $this->Mahasiswa_model->tambahDataMahasiswa();
+            $this->session->set_flashdata('flash', 'Ditambahkan');
+            redirect('mahasiswa');
+        }
+    }
 
-		// [
-
-		// 	'nama'=>'Sultan Abdi Kusumo',
-		// 	'nrp'=>'163040111',
-		// 	'email'=>'sultan@mail.unpas.ac.id',
-		// 	'jurusan'=>'Teknik Informatika',
-		// ],
-
-		// [
-
-		// 	'nama'=>'Muzani Ahmad',
-		// 	'nrp'=>'163040082',
-		// 	'email'=>'muzani@mail.unpas.ac.id',
-		// 	'jurusan'=>'Teknik Informatika',
-		// ]
-
-
-
-		// ];
-
-		$this->load->model('Mahasiswa_model','mhs');
-
-		$data['mahasiswa']=$this->mhs->getAllMahasiwa();
-
-		$this->load->view('mahasiswa/index',$data);
-	}
-
+    public function hapus($id)
+    {
+        $this->Mahasiswa_model->hapusDataMahasiswa($id);
+        $this->session->set_flashdata('flash', 'Dihapus');
+        redirect('mahasiswa');
+    }
 }
