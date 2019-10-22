@@ -11,7 +11,7 @@
 					    <h6 class="card-subtitle mb-2 text-muted"><?= $mahasiswa['email'];  ?></h6>
 					<p class="card-text"><?= $mahasiswa['nrp'];  ?></p>
 					<p class="card-text"><?= $mahasiswa['jurusan'];  ?></p>
-					<a href="<?= base_url(); ?>mahasiswa" class="btn btn-primary">Kembaali</a>
+					<a href="<?= base_url(); ?>mahasiswa" class="btn btn-primary">Kembali</a>
 			 	</div>
 			</div>
 		</div>
